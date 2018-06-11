@@ -1,0 +1,54 @@
+<ion-header>
+  <head-nav [title]="'Block'"></head-nav>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="loading">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="page-content">
+    <h1>Block #{{ block.height }}</h1>
+    <p class="item-hash">
+      <b>Block Hash</b> {{ block.hash }}</p>
+
+    <h2>Summary</h2>
+
+    <ion-list *ngIf="!loading" class="list--summary">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 col-md class="allow-truncated-text">
+            <ion-item>
+              Number of Transactions
+              <ion-note item-end>
+                {{ block.txs.length }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+              Height
+              <ion-note item-end>
+                {{ block.number }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+              Timestamp
+              <ion-note item-end>
+                {{ block.timestamp * 1000 | date:'medium' }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+              Previous Block
+              <ion-note item-end>
+                <a (click)="goToPreviousBlock()">{{ block.number - 1 }}</a>
+              </ion-note>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+
+    <h2>Transactions</h2>
+    <transaction-list [transactions]="block.txs"></transaction-list>
+  </div>
+
+</ion-content>
